@@ -270,7 +270,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-![alt text](image-3.png)
+![alt text](images\images-1.png)
 
 ## Analysis and Insights:
 
@@ -495,7 +495,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-![alt text](image-4.png)
+![alt text](images\images-2.png)
 
 ### Analysis and Insights:
 
@@ -547,7 +547,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-![alt text](image-7.png)
+![alt text](images\images-7.png)
 
 ### Analysis and Insights:
 
@@ -610,7 +610,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-![alt text](image-6.png)
+![alt text](images\images-6.png)
 
 ### Analysis
 
@@ -657,7 +657,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-![alt text](image-8.png)
+![alt text](images\images-8.png)
 
 ```python
 df_condom_sales_types =  df.pivot_table(values='Market Revenue (Million USD)',index='Year',columns='Most Popular Condom Type',aggfunc='sum')
