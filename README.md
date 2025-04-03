@@ -639,3 +639,27 @@ plt.show()
 - Risk of No Campaigns: Without campaigns, sales are prone to volatility, showing sharp rises followed by dramatic declines, which could deter long-term investments.
 
 - Long-term Growth: While campaigns may not always lead to record-breaking sales, their real value lies in fostering resilience and stability over time.
+
+# 5. Optimal Sales Charts
+
+## Most Popular Condom Type from 2015 to 2025
+
+### Visualize Data
+
+```python
+sns.set_theme(style='darkgrid')
+ax = df_condom_sales_types.plot(kind='bar', figsize=(10, 5),color=custom_palette)
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x,_: f'${int(x/1000)}K'))
+plt.title('Most Popular Condom Type from 2015 to 2025')
+plt.ylabel('Market Revenue (Million USD)')
+plt.tight_layout()
+plt.show()
+```
+
+![alt text](image-8.png)
+
+```python
+df_condom_sales_types =  df.pivot_table(values='Market Revenue (Million USD)',index='Year',columns='Most Popular Condom Type',aggfunc='sum')
+df_condom_sales_types
+```
