@@ -66,7 +66,7 @@ df['Female Purchases (%)'] = pd.to_numeric(df['Female Purchases (%)'], errors='c
 
 ## The Analysis
 
-### 1. How have Total Sales and Market Revenue changed over the years?
+# 1. How have Total Sales and Market Revenue changed over the years?
 
 I grouped the dataset by Year to analyze total condom sales and market revenue from 2015 to 2025. Using .groupby('Year'), I summed up both 'Total Sales (Million Units)' and 'Market Revenue (Million USD)' to get yearly totals. The .reset_index() function was applied to convert the grouped data back into a structured DataFrame. This resulted in two datasets, Total_sales_years and Market_Revenue, providing insights into yearly sales volume and revenue trends.
 
@@ -270,9 +270,9 @@ plt.tight_layout()
 plt.show()
 ```
 
-![alt text](image.png)
+![alt text](image-3.png)
 
-## Key Insights
+## Analysis and Insights:
 
 - Steady Growth (2015-2024): Sales and revenue increased overall, peaking in 2023-2024.
 
@@ -280,7 +280,7 @@ plt.show()
 
 - Sharp Decline (2025): A major drop in both sales and revenue suggests market shifts, saturation, or external factors.
 
-### 2. Which countries contribute the most to global condom sales?
+# 2. Which countries contribute the most to global condom sales?
 
 ```python
 df_countries_sales = df.groupby('Country')['Market Revenue (Million USD)'].sum().reset_index()
@@ -383,10 +383,198 @@ plt.tight_layout()
 plt.show()
 ```
 
-![alt text](image-1.png)
+![alt text](image-2.png)
 
-## Key Insights
+## Analysis and Insights:
 
 So, looking at the chart, the UK and USA are clearly dominating with market revenues close to $150K. It's pretty obvious these two countries are powerhouses worth considering for business or investments. Brazil is doing well too, sitting just below the UK and USA, so it's definitely a market that stands out.
 
 On the other hand, Australia has the lowest revenue—just above $100K—so it might be a smaller market compared to the others. As for the middle bunch like China, France, Germany, India, Japan, and South Africa, they're all between $120K and $140K. These seem like decent options if you're looking for moderate opportunities.
+
+# 3. What is the relationship between Teen Pregnancy Rates and Contraceptive Usage?
+
+```python
+df_CUR = df.groupby('Country')[['Teen Pregnancy Rate (per 10000 teens)','Contraceptive Usage Rate (%)']].median()
+df_CUR
+```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Teen Pregnancy Rate (per 10000 teens)</th>
+      <th>Contraceptive Usage Rate (%)</th>
+    </tr>
+    <tr>
+      <th>Country</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Australia</th>
+      <td>36.32</td>
+      <td>45.89</td>
+    </tr>
+    <tr>
+      <th>Brazil</th>
+      <td>27.34</td>
+      <td>63.73</td>
+    </tr>
+    <tr>
+      <th>China</th>
+      <td>32.92</td>
+      <td>53.82</td>
+    </tr>
+    <tr>
+      <th>France</th>
+      <td>33.84</td>
+      <td>63.81</td>
+    </tr>
+    <tr>
+      <th>Germany</th>
+      <td>34.94</td>
+      <td>58.51</td>
+    </tr>
+    <tr>
+      <th>India</th>
+      <td>37.73</td>
+      <td>52.65</td>
+    </tr>
+    <tr>
+      <th>Japan</th>
+      <td>29.40</td>
+      <td>47.31</td>
+    </tr>
+    <tr>
+      <th>South Africa</th>
+      <td>40.82</td>
+      <td>47.65</td>
+    </tr>
+    <tr>
+      <th>UK</th>
+      <td>30.97</td>
+      <td>57.86</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>44.17</td>
+      <td>48.32</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+#### Visualize Data
+
+```python
+plt.figure(figsize=(10, 6))
+sns.set_theme(style='darkgrid')
+df_CUR = df.groupby('Country')[['Teen Pregnancy Rate (per 10000 teens)','Contraceptive Usage Rate (%)']].median()
+sns.heatmap(df_CUR, annot=True, cmap="coolwarm", linewidths=0.5, fmt=".2f",)
+plt.xlabel("Max Contraceptive Usage Rate (%)")
+plt.ylabel("Max Teen Pregnancy Rate (per 10000 teens)")
+plt.title("Max Teen Pregnancy vs. Contraceptive Usage Rate")
+plt.tight_layout()
+plt.show()
+```
+
+![alt text](image-1.png)
+
+### Analysis and Insights:
+
+The heatmap highlights the relationship between teen pregnancy rates and contraceptive usage rates across countries.
+
+- Countries like Brazil, France, and Germany show higher contraceptive usage (around 60%) but still report moderate teen pregnancy rates (below 35 per 10,000 teens), suggesting that other factors like education and healthcare access play important roles.
+
+- South Africa has a high teen pregnancy rate (40.82), despite a moderate contraceptive usage rate (47.65%), potentially pointing to issues like access, cultural barriers, or ineffective education.
+
+- The USA shows a relatively high pregnancy rate (44.17), which could be influenced by disparities in sex education, healthcare access, and socio-cultural factors, even though contraceptive usage is around 48%.
+
+- Japan has a moderate contraceptive usage rate (47.31%) but a significantly lower pregnancy rate (29.40), indicating the importance of strong sex education and cultural attitudes towards teen pregnancy.
+
+### Key Insight:
+
+The heatmap suggests that while contraceptive usage is a key factor in reducing teen pregnancies, sex education, cultural norms, and healthcare access are also crucial determinants.
+
+# 4. How do Government Campaigns and Sex Education Programs influence condom sales?
+
+## Sales Trend Comparison: With and Without Government Campaigns
+
+#### Visualize Data
+
+```python
+df_no_campaigns = df[df['Government Campaigns'] == 'No'].copy()
+df_campaigns = df[df['Government Campaigns'] == 'Yes'].copy()
+
+df_no_campaigns = df_no_campaigns.groupby('Year', as_index=False)['Total Sales (Million Units)'].sum()
+df_campaigns = df_campaigns.groupby('Year', as_index=False)['Total Sales (Million Units)'].sum()
+
+
+plt.figure(figsize=(10, 6))
+
+sns.set_theme(style='darkgrid')
+
+
+sns.lineplot(data=df_no_campaigns, x='Year', y='Total Sales (Million Units)', label='No Campaigns', marker='o')
+sns.lineplot(data=df_campaigns, x='Year', y='Total Sales (Million Units)', label='With Campaigns', marker='o')
+
+
+plt.title('Sales Trend Comparison: With and Without Government Campaigns')
+plt.xlabel('Year')
+plt.ylabel('Total Sales (Million Units)')
+plt.xticks(df_no_campaigns['Year'], rotation=45)
+
+
+plt.legend(title='Government Campaigns')
+plt.tight_layout()
+plt.show()
+```
+
+![alt text](image.png)
+
+### Analysis and Insights:
+
+#### 1. Overall Trend:
+
+- Sales with government campaigns (orange line) show a generally stable trend over the years, with fewer sharp rises and falls.
+
+- Sales without government campaigns (blue line), on the other hand, are more volatile, experiencing significant ups and downs throughout the time period.
+
+#### 2. Specific Year-by-Year Observations:
+
+- 2015: Sales with campaigns start strong at around 32,500 units, outpacing sales without campaigns (approx. 25,000 units).
+
+- 2016-2017: Sales without campaigns climb significantly, briefly overtaking sales with campaigns.
+
+- 2018-2019: Sales with campaigns peak at 32,500 units, whereas sales without campaigns experience an opposite trend—dropping and rising dramatically.
+
+- 2020: Without campaigns, sales plunge to a striking low of 22,500 units, while sales with campaigns recover and stabilize at 30,000 units.
+
+- 2023-2025: The gap between the two narrows, but volatility for sales without campaigns remains evident—ending at a sharp low of 25,000 units, while sales with campaigns drop slightly but remain steadier at 27,500 units.
+
+### Insights
+
+- Stability with Government Support: Government campaigns clearly contribute to consistent and predictable sales trends over time, avoiding extreme peaks and troughs.
+
+- Volatility Without Campaigns: Sales without campaigns show significant fluctuations, reflecting higher risks and unpredictability in market performance.
+
+- Performance Peaks: The years when sales without campaigns peak (2016, 2019, and 2023), sales with campaigns are relatively lower but remain stable. This indicates that campaigns might not always boost sales dramatically but act as a stabilizing factor.
+
+- Critical Drops: Major declines in sales without campaigns (e.g., 2020 and 2025) highlight the vulnerabilities of markets without government intervention.
