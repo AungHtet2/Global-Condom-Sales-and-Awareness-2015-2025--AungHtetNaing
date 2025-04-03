@@ -547,7 +547,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-![alt text](image-5.png)
+![alt text](image-7.png)
 
 ### Analysis and Insights:
 
@@ -610,7 +610,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-![alt text](images/image-4.png)
+![alt text](image-6.png)
 
 ### Analysis
 
