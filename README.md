@@ -270,7 +270,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-![alt text](images\images-1.png)
+![Chart](images\images-1.png)
 
 ## Analysis and Insights:
 
