@@ -578,3 +578,64 @@ plt.show()
 - Performance Peaks: The years when sales without campaigns peak (2016, 2019, and 2023), sales with campaigns are relatively lower but remain stable. This indicates that campaigns might not always boost sales dramatically but act as a stabilizing factor.
 
 - Critical Drops: Major declines in sales without campaigns (e.g., 2020 and 2025) highlight the vulnerabilities of markets without government intervention.
+
+## Sales Trend Comparison: With and Without Sex Education Programs
+
+#### Visualize Data
+
+```python
+df_no_sex_edu = df[df['Sex Education Programs (Yes/No)'] == 'No'].copy()
+df_sex_edu = df[df['Sex Education Programs (Yes/No)'] == 'Yes'].copy()
+
+df_no_sex_edu = df_no_sex_edu.groupby('Year', as_index=False)['Total Sales (Million Units)'].sum()
+df_sex_edu = df_sex_edu.groupby('Year', as_index=False)['Total Sales (Million Units)'].sum()
+
+plt.figure(figsize=(10, 6))
+
+sns.set_theme(style='darkgrid')
+
+
+sns.lineplot(data=df_no_sex_edu, x='Year', y='Total Sales (Million Units)', label='No Sex Education Programs', marker='o')
+sns.lineplot(data=df_sex_edu, x='Year', y='Total Sales (Million Units)', label='With Sex Education Programs', marker='o')
+
+
+plt.title('Sales Trend Comparison: With and Without Sex Education Programs')
+plt.xlabel('Year')
+plt.ylabel('Total Sales (Million Units)')
+plt.xticks(df_no_sex_edu['Year'], rotation=45)
+
+
+plt.legend(title='Sex Education Programs')
+plt.tight_layout()
+plt.show()
+```
+
+![alt text](images/image-4.png)
+
+### Analysis
+
+#### 1. Initial Growth (2015–2017):
+
+- Both sales with and without campaigns rose steadily, suggesting that factors driving the market were consistent during this time.
+
+#### 2. Peaks and Drops (2018–2019):
+
+- Sales without campaigns peaked significantly in 2018, reaching 37,500 units, likely due to an external surge or market anomaly.
+
+- However, the following year (2019), sales without campaigns dropped sharply to 22,500 units, indicating vulnerability in markets without government support.
+
+- Sales with campaigns showed opposite trends, rising steadily during this period and stabilizing around 30,000 units.
+
+#### 3. Fluctuations (2020–2025):
+
+- Sales without campaigns saw continuous volatility, ending at a low of 25,000 units in 2025. This reflects the unpredictable nature of markets without consistent support.
+
+- Sales with campaigns fluctuated less dramatically and maintained a steady range, finishing at 27,500 units in 2025.
+
+### Insights
+
+- Stabilizing Effect of Campaigns: Government campaigns minimize sales fluctuations and provide a reliable framework for steady growth, especially during challenging market conditions.
+
+- Risk of No Campaigns: Without campaigns, sales are prone to volatility, showing sharp rises followed by dramatic declines, which could deter long-term investments.
+
+- Long-term Growth: While campaigns may not always lead to record-breaking sales, their real value lies in fostering resilience and stability over time.
